@@ -30,7 +30,7 @@ def apply_coupons(cart, coupons)
       if (g_count % coupon[:num]) == 0
         cart[g_item + " W/COUPON"] = {
           :price => (coupon[:cost] / coupon[:num]).round(2),
-          :clearance => grocery[g_item][:clearance],
+          :clearance => cart[g_item][:clearance],
           :count => g_count
         }
 
