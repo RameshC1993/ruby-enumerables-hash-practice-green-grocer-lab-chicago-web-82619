@@ -34,7 +34,7 @@ def apply_coupons(grocery, coupons)
           :count => g_count
         }
 
-        grocery.delete(g_item)
+        grocery[g_item][:count] = 0
 
       elsif grocery[g_item][:count] > coupon[:num]
         extra = g_count % coupon[:num]
@@ -52,8 +52,14 @@ def apply_coupons(grocery, coupons)
   return grocery
 end
 
-def apply_clearance(cart)
-  # code here
+def apply_clearance(grocery)
+  grocery.each do |key, value|
+    if value[:clearance]
+      grocery[key][:price] = (grocery[key][:price] * 0.8).round(2)
+    end
+  end
+
+  return grocery
 end
 
 def checkout(cart, coupons)
