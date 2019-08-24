@@ -25,7 +25,7 @@ def apply_coupons(cart, coupons)
 
     if cart.has_key?(coupon[:item])
       g_item = coupon[:item]
-      g_count = grocery[g_item][:count]
+      g_count = cart[g_item][:count]
 
       if (g_count % coupon[:num]) == 0
         grocery[g_item + " W/COUPON"] = {
