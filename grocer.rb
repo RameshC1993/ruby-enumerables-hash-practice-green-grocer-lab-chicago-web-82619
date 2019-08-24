@@ -21,7 +21,36 @@ end
 
 
 def apply_coupons(cart, coupons)
-  # code here
+  coupons.each do |coupon|
+
+    if grocery.has_key?(coupon[:item])
+      g_item = coupon[:item]
+      g_count = grocery[g_item][:count]
+
+      if (g_count % coupon[:num]) == 0
+        puts "inside if"
+        grocery[g_item + " W/COUPON"] = {
+          :price => (coupon[:cost] / coupon[:num]).round(2),
+          :clearance => grocery[g_item][:clearance],
+          :count => g_count
+        }
+
+        grocery.delete(g_item)
+
+      elsif grocery[g_item][:count] > coupon[:num]
+        extra = g_count % coupon[:num]
+        grocery[g_item][:count] = extra
+        grocery[g_item + " W/COUPON"] = {
+          :price => (coupon[:cost] / coupon[:num]).round(2),
+          :clearance => grocery[g_item][:clearance],
+          :count => g_count - extra
+        }
+
+      end
+    end
+  end
+
+  return grocery
 end
 
 def apply_clearance(cart)
