@@ -23,7 +23,7 @@ end
 def apply_coupons(cart, coupons)
   coupons.each do |coupon|
 
-    if grocery.has_key?(coupon[:item])
+    if cart.has_key?(coupon[:item])
       g_item = coupon[:item]
       g_count = grocery[g_item][:count]
 
