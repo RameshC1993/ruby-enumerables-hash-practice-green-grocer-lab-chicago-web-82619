@@ -34,14 +34,14 @@ def apply_coupons(cart, coupons)
           :count => g_count
         }
 
-        grocery[g_item][:count] = 0
+        cart[g_item][:count] = 0
 
-      elsif grocery[g_item][:count] > coupon[:num]
+      elsif cart[g_item][:count] > coupon[:num]
         extra = g_count % coupon[:num]
-        grocery[g_item][:count] = extra
-        grocery[g_item + " W/COUPON"] = {
+        cart[g_item][:count] = extra
+        cart[g_item + " W/COUPON"] = {
           :price => (coupon[:cost] / coupon[:num]).round(2),
-          :clearance => grocery[g_item][:clearance],
+          :clearance => cart[g_item][:clearance],
           :count => g_count - extra
         }
 
@@ -49,17 +49,17 @@ def apply_coupons(cart, coupons)
     end
   end
 
-  return grocery
+  return cart
 end
 
-def apply_clearance(grocery)
-  grocery.each do |key, value|
+def apply_clearance(cart)
+  cart.each do |key, value|
     if value[:clearance]
-      grocery[key][:price] = (grocery[key][:price] * 0.8).round(2)
+      cart[key][:price] = (cart[key][:price] * 0.8).round(2)
     end
   end
 
-  return grocery
+  return cart
 end
 
 def checkout(cart, coupons)
